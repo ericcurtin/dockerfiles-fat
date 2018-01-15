@@ -2,13 +2,12 @@ FROM centos:6
 
 RUN sed -i '/tsflags=nodocs/d' /etc/yum.conf
 RUN printf $'[mariadb]\n\
-name = MariaDB\n\
-baseurl = http://yum.mariadb.org/10.0/centos6-amd64\n\
-gpgkey = https://yum.mariadb.org/RPM-GPG-KEY-MariaDB\n\
-gpgcheck = 1' > /etc/yum.repos.d/mariadb.repo
+name=MariaDB\n\
+baseurl=https://yum.mariadb.org/10.0/centos6-amd64\n\
+gpgcheck=0\n' > /etc/yum.repos.d/mariadb.repo
 RUN curl -sL https://rpm.nodesource.com/setup_6.x | bash -
-RUN yum -y install epel-release centos-release-scl-rh &&\
-    yum -y install http://ftp.heanet.ie/mirrors/repoforge/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm &&\
+RUN yum -y install epel-release centos-release-scl-rh\
+      https://ftp.heanet.ie/mirrors/repoforge/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm &&\
     yum -y update &&\
     yum -y install vim\
                    wget\
@@ -66,17 +65,18 @@ RUN yum -y install epel-release centos-release-scl-rh &&\
                    nodejs\
                    lcov\
                    createrepo\
-                   devtoolset-7-gcc-c++ &&\
+                   devtoolset-7-gcc-c++\
+                   MariaDB-devel &&\
     yum clean all &&\
     rm -rf /tmp/* /var/tmp/* /var/cache/yum /usr/lib/mariadb/libmariadbclient.a
 RUN cd /tmp &&\
-    wget http://www.kernel.org/pub/software/scm/git/git-2.13.1.tar.gz &&\
+    wget https://www.kernel.org/pub/software/scm/git/git-2.13.1.tar.gz &&\
     tar xf git-2.13.1.tar.gz &&\
     cd /tmp/git-2.13.1 &&\
-    make -j3 configure &&\
+    make configure &&\
     ./configure --prefix=/usr &&\
-    make -j3 &&\
-    make -j3 install &&\
+    make -j3 all doc &&\
+    make -j3 install install-doc &&\
     rm -rf /tmp/git-2.13.1*
 RUN cd /tmp &&\
     wget https://downloads.mariadb.com/Connectors/c/connector-c-3.0.2/mariadb-connector-c-3.0.2-src.tar.gz &&\

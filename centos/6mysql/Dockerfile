@@ -2,8 +2,8 @@ FROM centos:6
 
 RUN sed -i '/tsflags=nodocs/d' /etc/yum.conf
 RUN curl -sL https://rpm.nodesource.com/setup_6.x | bash -
-RUN yum -y install epel-release centos-release-scl-rh &&\
-    yum -y install http://ftp.heanet.ie/mirrors/repoforge/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm &&\
+RUN yum -y install epel-release centos-release-scl-rh\
+      https://ftp.heanet.ie/mirrors/repoforge/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm &&\
     yum -y update &&\
     yum -y install vim\
                    wget\
@@ -64,13 +64,13 @@ RUN yum -y install epel-release centos-release-scl-rh &&\
     yum clean all &&\
     rm -rf /tmp/* /var/tmp/* /var/cache/yum /usr/lib64/libmysqlcppconn-static.a
 RUN cd /tmp &&\
-    wget http://www.kernel.org/pub/software/scm/git/git-2.13.1.tar.gz &&\
+    wget https://www.kernel.org/pub/software/scm/git/git-2.13.1.tar.gz &&\
     tar xf git-2.13.1.tar.gz &&\
     cd /tmp/git-2.13.1 &&\
-    make -j3 configure &&\
+    make configure &&\
     ./configure --prefix=/usr &&\
-    make -j3 &&\
-    make -j3 install &&\
+    make -j3 all doc &&\
+    make -j3 install install-doc &&\
     rm -rf /tmp/git-2.13.1*
 RUN ln -s /usr/bin/vim /usr/bin/vi
 
