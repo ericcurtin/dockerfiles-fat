@@ -79,12 +79,10 @@ RUN cd /tmp &&\
     make -j3 install install-doc &&\
     rm -rf /tmp/git-2.13.1*
 RUN cd /tmp &&\
-    wget https://downloads.mariadb.com/Connectors/c/connector-c-3.0.2/mariadb-connector-c-3.0.2-src.tar.gz &&\
-    tar xf /tmp/mariadb-connector-c-3.0.2-src.tar.gz &&\
-    cd mariadb-connector-c-3.0.2-src &&\
-    cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr . &&\
-    make -j3 &&\
-    make -j3 install &&\
-    rm -rf /tmp/mariadb-connector-c-3.0.2-src*
+    wget https://github.com/ericcurtin/mariadb-connector-cpp/releases/download/1.1.10/mariadb-connector-c.-el6.tar.gz &&\
+    tar xf /tmp/mariadb-connector-c.-el6.tar.gz &&\
+    cd mariadb-connector-c++--unknown &&\
+    cp -r lib64 include /usr/ &&\
+    rm -rf /tmp/mariadb-connector-c++--unknown*
 RUN ln -s /usr/bin/vim /usr/bin/vi
 
