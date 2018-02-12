@@ -86,8 +86,8 @@ RUN cd /tmp &&\
     wget https://downloads.mariadb.com/Connectors/c/connector-c-3.0.3/mariadb-connector-c-3.0.3-src.tar.gz &&\
     tar xf /tmp/mariadb-connector-c-3.0.3-src.tar.gz &&\
     cd mariadb-connector-c-3.0.3-src &&\
-    cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr . &&\
-    make -j3 &&\
+    cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr --build . &&\
+    make VERBOSE=1 -j3 &&\
     make -j3 install &&\
     cp -r /usr/include/mariadb/* /usr/include/ &&\
     rm -rf /usr/include/mariadb &&\
