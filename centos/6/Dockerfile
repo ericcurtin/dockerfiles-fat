@@ -83,5 +83,17 @@ RUN cd /tmp &&\
     make -j3 all doc &&\
     make -j3 install install-doc &&\
     rm -rf /tmp/git-2.13.1*
+RUN cd /tmp &&\
+    wget https://downloads.mariadb.com/Connectors/c/connector-c-3.0.3/mariadb-connector-c-3.0.3-src.tar.gz &&\
+    tar xf /tmp/mariadb-connector-c-3.0.3-src.tar.gz &&\
+    cd mariadb-connector-c-3.0.3-src &&\
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr . &&\
+    make VERBOSE=1 -j3 &&\
+    make -j3 install &&\
+    cp -r /usr/include/mariadb/* /usr/include/ &&\
+    rm -rf /usr/include/mariadb &&\
+    cp -r /usr/lib/mariadb/* /usr/lib64/ &&\
+    rm -rf /usr/lib/mariadb &&\
+    rm -rf /tmp/mariadb-connector-c-3.0.3-src*
 RUN ln -s /usr/bin/vim /usr/bin/vi
 
