@@ -16,7 +16,7 @@ fi
 
 for dir in */*/*; do
   dir=$(printf "$dir\n" | sed 's#/Dockerfile##')
-  DOCIMG=$(printf "$dir\n" | sed 's#/##g' | sed 's#^#curtine/sxx:#')
+  DOCIMG=$(printf "$dir\n" | sed 's#/##g' | sed 's#^#curtine/dockerfiles-fat:#')
 
   if [ "$1" == "build" ]; then
     /bin/bash -c "cd $dir && docker build -t $DOCIMG ."
