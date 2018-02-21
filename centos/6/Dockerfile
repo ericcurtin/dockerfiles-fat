@@ -88,8 +88,6 @@ RUN cd /tmp &&\
       https://github.com/ericcurtin/mariadb-connector-c/releases/download/3.0.3/mariadb-connector-c-3.0.3-el6.tar.gz &&\
     tar xf mariadb-connector-c-3.0.3-el6.tar.gz &&\
     cp -r mariadb-connector-c-3.0.3-linux-x86_64/* /usr/ &&\
-    mv /usr/lib/mariadb/*.a /usr/lib/ &&\
-    rm -rf /usr/lib/mariadb &&\
     rm -rf mariadb-connector-c*
 RUN ln -s /usr/bin/vim /usr/bin/vi
 
