@@ -64,13 +64,13 @@ RUN yum -y install epel-release centos-release-scl-rh\
     yum clean all &&\
     rm -rf /tmp/* /var/tmp/* /var/cache/yum /usr/lib64/libmysqlcppconn-static.a
 RUN cd /tmp &&\
-    wget https://www.kernel.org/pub/software/scm/git/git-2.13.1.tar.gz &&\
-    tar xf git-2.13.1.tar.gz &&\
-    cd /tmp/git-2.13.1 &&\
+    wget https://www.kernel.org/pub/software/scm/git/git-2.16.2.tar.gz &&\
+    tar xf git-2.16.2.tar.gz &&\
+    cd /tmp/git-2.16.2 &&\
     make configure &&\
     ./configure --prefix=/usr &&\
     make -j3 all doc &&\
     make -j3 install install-doc &&\
-    rm -rf /tmp/git-2.13.1*
+    rm -rf /tmp/git-2.16.2*
 RUN ln -s /usr/bin/vim /usr/bin/vi
 
