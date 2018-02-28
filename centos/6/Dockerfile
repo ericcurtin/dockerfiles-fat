@@ -64,14 +64,12 @@ RUN yum -y install epel-release centos-release-scl-rh\
                    perl-suidperl\
                    nc\
                    valgrind\
-                   openssh-server\
                    cgdb\
                    nodejs\
                    lcov\
                    createrepo\
                    devtoolset-7-gcc-c++\
-                   MariaDB-devel\
-                   openssh-clients &&\
+                   MariaDB-devel &&\
     yum clean all &&\
     rm -rf /tmp/* /var/tmp/* /var/cache/yum /usr/lib/mariadb/libmariadbclient.a
 RUN cd /tmp &&\
@@ -82,7 +80,18 @@ RUN cd /tmp &&\
     ./configure --prefix=/usr &&\
     make -j3 all doc &&\
     make -j3 install install-doc &&\
+    cd /tmp &&\
     rm -rf /tmp/git-2.16.2*
+RUN cd /tmp &&\
+    git clone --depth 1 https://github.com/openssh/openssh-portable.git -b\
+      V_7_5 &&\
+    cd openssh-portable &&\
+    autoreconf &&\
+    ./configure --prefix=/usr &&\
+    make -j3 &&\
+    make -j3 install &&\
+    cd /tmp &&\
+    rm -rf /tmp/openssh-portable
 RUN cd /tmp &&\
     wget\
       https://github.com/ericcurtin/mariadb-connector-c/releases/download/3.0.3/mariadb-connector-c-3.0.3-el6.tar.gz &&\
