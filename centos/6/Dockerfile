@@ -83,15 +83,15 @@ RUN cd /tmp &&\
     cd /tmp &&\
     rm -rf /tmp/git-2.16.2*
 RUN cd /tmp &&\
-    git clone --depth 1 https://github.com/openssh/openssh-portable.git -b\
-      V_7_5 &&\
-    cd openssh-portable &&\
+    wget https://ftp.heanet.ie/pub/OpenBSD/OpenSSH/portable/openssh-7.6p1.tar.gz &&\
+    tar xf openssh-7.6p1.tar.gz &&\
+    cd openssh-7.6p1 &&\
     autoreconf &&\
     ./configure --prefix=/usr &&\
     make -j3 &&\
     make -j3 install &&\
     cd /tmp &&\
-    rm -rf /tmp/openssh-portable
+    rm -rf /tmp/openssh-7.6p1*
 RUN cd /tmp &&\
     wget\
       https://github.com/ericcurtin/mariadb-connector-c/releases/download/3.0.3/mariadb-connector-c-3.0.3-el6.tar.gz &&\

@@ -55,7 +55,6 @@ RUN yum -y install epel-release centos-release-scl-rh\
                    mysql-server\
                    nc\
                    valgrind\
-                   openssh-server\
                    nodejs\
                    createrepo\
                    lcov\
@@ -72,5 +71,16 @@ RUN cd /tmp &&\
     make -j3 all doc &&\
     make -j3 install install-doc &&\
     rm -rf /tmp/git-2.16.2*
+RUN cd /tmp &&\
+    wget\
+      https://ftp.heanet.ie/pub/OpenBSD/OpenSSH/portable/openssh-7.6p1.tar.gz &&\
+    tar xf openssh-7.6p1.tar.gz &&\
+    cd openssh-7.6p1 &&\
+    autoreconf &&\
+    ./configure --prefix=/usr &&\
+    make -j3 &&\
+    make -j3 install &&\
+    cd /tmp &&\
+    rm -rf /tmp/openssh-7.6p1*
 RUN ln -s /usr/bin/vim /usr/bin/vi
 
