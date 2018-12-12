@@ -1,15 +1,14 @@
 FROM ubuntu:18.04
 
-ENV http_proxy=$http_proxy
-ENV https_proxy=$https_proxy
-ENV ftp_proxy=$ftp_proxy
-
 RUN apt update -y &&\
-    apt install -y init cmake g++ clang lsb-release git libpcre3-dev\
-      libssl-dev zlib1g-dev net-tools vim curl &&\
+    DEBIAN_FRONTEND='noninteractive' apt install -y cmake g++ libpoco-dev\
+      lsb-release libboost-test-dev perl gpg clang systemd init libssl-dev\
+      net-tools vim curl wget &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN cd /tmp && git clone https://github.com/nginx/nginx.git &&\
-    git clone https://github.com/fdintino/nginx-upload-module.git &&\
-    cd nginx && auto/configure --add-module=../nginx-upload-module &&\
-    make -j3 && make -j3 install && cd /tmp && rm -rf nginx*
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -c -s)-pgdg main" >> /etc/apt/sources.list.d/pgdg.list &&\
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+RUN apt update -y &&\
+    DEBIAN_FRONTEND='noninteractive' apt install -y postgresql-server-dev-10\
+      postgresql-10 &&\
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
