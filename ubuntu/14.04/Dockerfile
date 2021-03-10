@@ -5,6 +5,6 @@ ENV https_proxy=$https_proxy
 ENV ftp_proxy=$ftp_proxy
 
 RUN apt update -y &&\
-    apt install -y init cmake g++ clang libpoco-dev lsb-release &&\
+    apt install -y cmake g++ clang libpoco-dev lsb-release &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
